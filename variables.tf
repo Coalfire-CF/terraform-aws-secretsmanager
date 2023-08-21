@@ -77,14 +77,18 @@ variable "shared_secrets" {
   default = []
 }
 
-variable "PGSQL_RDS_Single_User_Secret_Rotation_Enabled" {
-  description = "controls pgsql automatic secret rotation"
+variable "tags" {
+  description = "A mapping of tags to assign to the resource"
+  type        = map(string)
+  default     = {}
 }
 
-variable "PGSQL_RDS_Multi_User_Secret_Rotation_Enabled" {
-  description = "controls pgsql automatic secret rotation"
+variable "regional_tags" {
+  description = "a map of strings that contains regional level tags"
+  type        = map(string)
 }
 
-variable "Other_Secret_Rotation_Enabled" {
-  description = "controls other types of automatic secret rotation" #https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_available-rotation-templates.html#OTHER_rotation_templates
+variable "global_tags" {
+  description = "a map of strings that contains global level tags"
+  type        = map(string)
 }
