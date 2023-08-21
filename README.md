@@ -36,6 +36,14 @@ Include example for how to call the module below with generic variables
 module "secrets" {
   source                    = "github.com/Coalfire-CF/ACE-AWS-SecretsManager?ref=vX.X.X"
   
+  partition = var.partition
+  names = [""]
+  length = 15
+  special = ""
+  override_special = "$%&!"
+  kms_key_id = data.terraform_remote_state.setup.sm_kms_key_id
+  path = ""
+  cross_account_ids = [""]
 }
 ```
 
