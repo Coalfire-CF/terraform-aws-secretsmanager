@@ -9,7 +9,6 @@
 
 ## Dependencies
 
-List any dependencies here. E.g. security-core, region-setup
 
 ## Resource List
 
@@ -23,8 +22,8 @@ Insert a high-level list of resources created as a part of this module. E.g.
 
 This module can be called as outlined below.
 
-- Change directories to the `reponame` directory.
-- From the `terraform/azure/reponame` directory run `terraform init`.
+- Change directories to the directory that requires secrets and source the module as shown below.
+- From the directory run `terraform init`.
 - Run `terraform plan` to review the resources being created.
 - If everything looks correct in the plan output, run `terraform apply`.
 
