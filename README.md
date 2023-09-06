@@ -27,7 +27,7 @@ This module can be called as outlined below.
 
 ## Usage
 
-Include example for how to call the module below with generic variables
+The below example is how you can call secrets manager module to create secrets as needed. One important note is ensuring you exclude any characters for systems such as PGSQL. As there can be issues with the characters accepted by it. It's best to exclude `#$/_%&"'=`
 
 ```hcl
 module "secrets" {
