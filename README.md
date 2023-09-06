@@ -3,8 +3,6 @@
 
 </div>
 
-# Coalfire pak README Template
-
 ## ACE-AWS-SecretsManager
 
 ## Dependencies
@@ -12,9 +10,9 @@
 
 ## Resource List
 
-Insert a high-level list of resources created as a part of this module. E.g.
-
-- Storage Account
+- Secrets Manager Secret
+- Secret policy
+- secret version
 
 ## Code Updates
 
