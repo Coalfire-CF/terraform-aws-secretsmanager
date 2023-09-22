@@ -18,7 +18,7 @@ variable "special" {
 variable "override_special" {
   type        = string
   description = "Provide your own list of special characters"
-  default = "_%@!"
+  default = "_%@!" #this is the default as it the necessary special characters to prevent issues for PGSQL or other DB services we deploy
 }
 
 variable "kms_key_id" {
@@ -86,9 +86,13 @@ variable "tags" {
 variable "regional_tags" {
   description = "a map of strings that contains regional level tags"
   type        = map(string)
+    default     = {}
+
 }
 
 variable "global_tags" {
   description = "a map of strings that contains global level tags"
   type        = map(string)
+    default     = {}
+
 }

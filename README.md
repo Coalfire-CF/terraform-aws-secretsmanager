@@ -11,8 +11,8 @@
 ## Resource List
 
 - Secrets Manager Secret
-- Secret policy
-- secret version
+- Secret Policy
+- Secret Version
 
 ## Code Updates
 
