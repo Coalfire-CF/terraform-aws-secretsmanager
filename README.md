@@ -77,7 +77,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_cross_account_ids"></a> [cross\_account\_ids](#input\_cross\_account\_ids) | A list of strings containing the account IDs of AWS accounts that should have cross-account access to this secret | `list(string)` | `null` | no |
 | <a name="input_empty_value"></a> [empty\_value](#input\_empty\_value) | Whether the secret should be generated without a value | `bool` | `false` | no |
-| <a name="input_global_tags"></a> [global\_tags](#input\_global\_tags) | a map of strings that contains global level tags | `map(string)` | n/a | yes |
+| <a name="input_global_tags"></a> [global\_tags](#input\_global\_tags) | a map of strings that contains global level tags | `map(string)` | `{}` | no |
 | <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | Specifies the ARN or alias of the AWS KMS customer master key (CMK) to be used to encrypt the secret values in the versions stored in this secret. | `string` | n/a | yes |
 | <a name="input_length"></a> [length](#input\_length) | The length of the password to be generated | `number` | `15` | no |
 | <a name="input_min_lower"></a> [min\_lower](#input\_min\_lower) | Minimum number of lower case characters | `number` | `1` | no |
@@ -88,7 +88,7 @@ No modules.
 | <a name="input_override_special"></a> [override\_special](#input\_override\_special) | Provide your own list of special characters | `string` | `"_%@!"` | no |
 | <a name="input_partition"></a> [partition](#input\_partition) | The AWS partition to use | `string` | n/a | yes |
 | <a name="input_path"></a> [path](#input\_path) | Path to organize secrets | `string` | n/a | yes |
-| <a name="input_regional_tags"></a> [regional\_tags](#input\_regional\_tags) | a map of strings that contains regional level tags | `map(string)` | n/a | yes |
+| <a name="input_regional_tags"></a> [regional\_tags](#input\_regional\_tags) | a map of strings that contains regional level tags | `map(string)` | `{}` | no |
 | <a name="input_shared_secrets"></a> [shared\_secrets](#input\_shared\_secrets) | Secrets that should be shared across accounts. | `list(string)` | `[]` | no |
 | <a name="input_special"></a> [special](#input\_special) | Include special characters in random password string | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the resource | `map(string)` | `{}` | no |
