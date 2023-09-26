@@ -3,18 +3,21 @@
 
 </div>
 
-## ACE-AWS-SecretsManager
+# AWS Secrets Manager Terraform Module
+
+## Description
+
+This module creates secrets in AWS Secrets Manager. The varible `names` is a list that will be used to create secrets for however many values are passed into the list.
 
 ## Dependencies
 
+No dependencies.
 
 ## Resource List
 
 - Secrets Manager Secret
 - Secret Policy
 - Secret Version
-
-## Code Updates
 
 ## Deployment Steps
 
@@ -31,7 +34,7 @@ The below example is how you can call secrets manager module to create secrets a
 
 ```hcl
 module "secrets" {
-  source                    = "github.com/Coalfire-CF/ACE-AWS-SecretsManager?ref=vX.X.X"
+  source = "github.com/Coalfire-CF/terraform-aws-secretsmanager"
   
   partition = var.partition
   names = [""]
