@@ -37,12 +37,6 @@ data "aws_iam_policy_document" "resource_policy_MA" {
   }
 }
 
-
-## TODO:
-##SHOULD WE ADD A KMS KEY GRANT HERE FOR SM KMS KEY?????
-##
-
-
 resource "aws_secretsmanager_secret_version" "this" {
   count         = var.empty_value ? 0 : length(var.names)
   secret_id     = aws_secretsmanager_secret.this[count.index].id
