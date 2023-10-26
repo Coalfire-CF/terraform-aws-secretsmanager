@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 }
 
 resource "aws_secretsmanager_secret_version" "this" {
-  for_each      = var.empty_value ? 0 : var.names
+  for_each      = var.empty_value ? [] : var.names
   secret_id     = values(aws_secretsmanager_secret.this)[*].id
   secret_string = random_password.password[each.key].result
 
@@ -48,7 +48,7 @@ resource "aws_secretsmanager_secret_version" "this" {
 }
 
 resource "random_password" "password" {
-  for_each         = var.empty_value ? 0 : var.names
+  for_each         = var.empty_value ? [] : var.names
   length           = var.length
   special          = var.special
   override_special = var.override_special
