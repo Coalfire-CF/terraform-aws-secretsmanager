@@ -1,17 +1,14 @@
-data "aws_caller_identity" "current" {}
-
 resource "aws_secretsmanager_secret" "this" {
-  count      = length(var.names)
-  name       = "${var.path}${var.names[count.index]}"
-  kms_key_id = var.kms_key_id
-  tags       = merge(contains(var.shared_secrets, var.names[count.index]) ? { Shared = "yes" } : { Shared = "no" }, var.tags, var.global_tags, var.regional_tags)
-  policy     = contains(var.shared_secrets, var.names[count.index]) ? null : "{}"
+  for_each                = var.names
+  name                    = "${var.path}${each.value}"
+  kms_key_id              = var.kms_key_id
+  tags                    = merge(var.tags, var.global_tags, var.regional_tags)
+  policy                  = var.shared ? null : "{}"
+  recovery_window_in_days = var.recovery_window_in_days
 }
 resource "aws_secretsmanager_secret_policy" "shared" {
-  for_each = length(var.shared_secrets) != 0 ? {
-    for k, v in aws_secretsmanager_secret.this[*].tags : k => v
-    if lookup(v, "Shared", null) == "yes"
-  } : {}
+  for_each = var.shared ? var.names : []
+
   secret_arn = aws_secretsmanager_secret.this[each.key].arn
 
   policy = data.aws_iam_policy_document.resource_policy_MA.json
@@ -26,8 +23,9 @@ data "aws_iam_policy_document" "resource_policy_MA" {
         "secretsmanager:ListSecrets",
         "secretsmanager:GetSecretValue",
         "secretsmanager:DescribeSecret",
-      "secretsmanager:ListSecretVersionIds"]
-      resources = [aws_secretsmanager_secret.this.arn]
+        "secretsmanager:ListSecretVersionIds"
+      ]
+      resources = values(aws_secretsmanager_secret.this)[*].arn
       principals {
         identifiers = [
         "arn:${var.partition}:iam::${statement.value}:root"]
@@ -38,9 +36,9 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 }
 
 resource "aws_secretsmanager_secret_version" "this" {
-  count         = var.empty_value ? 0 : length(var.names)
-  secret_id     = aws_secretsmanager_secret.this[count.index].id
-  secret_string = random_password.password[count.index].result
+  for_each      = var.empty_value ? 0 : var.names
+  secret_id     = values(aws_secretsmanager_secret.this)[*].id
+  secret_string = random_password.password[each.key].result
 
   lifecycle {
     ignore_changes = [
@@ -50,7 +48,7 @@ resource "aws_secretsmanager_secret_version" "this" {
 }
 
 resource "random_password" "password" {
-  count            = var.empty_value ? 0 : length(var.names)
+  for_each         = var.empty_value ? 0 : var.names
   length           = var.length
   special          = var.special
   override_special = var.override_special

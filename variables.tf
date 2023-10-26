@@ -6,19 +6,19 @@ variable "names" {
 variable "length" {
   type        = number
   description = "The length of the password to be generated"
-  default = 15
+  default     = 15
 }
 
 variable "special" {
   type        = bool
   description = "Include special characters in random password string"
-  default = true
+  default     = true
 }
 
 variable "override_special" {
   type        = string
   description = "Provide your own list of special characters"
-  default = "_%@!" #this is the default as it the necessary special characters to prevent issues for PGSQL or other DB services we deploy
+  default     = "_%@!" #this is the default as it the necessary special characters to prevent issues for PGSQL or other DB services we deploy
 }
 
 variable "kms_key_id" {
@@ -34,25 +34,25 @@ variable "path" {
 variable "min_lower" {
   type        = number
   description = "Minimum number of lower case characters"
-  default = 1
+  default     = 1
 }
 
 variable "min_upper" {
   type        = number
   description = "Minimum number of upper case characters"
-  default = 1
+  default     = 1
 }
 
 variable "min_numeric" {
   type        = number
   description = "Minimum number of numeric characters"
-  default = 1
+  default     = 1
 }
 
 variable "min_special" {
   type        = number
   description = "Minimum number of special characters"
-  default = 1
+  default     = 1
 }
 
 variable "partition" {
@@ -63,18 +63,18 @@ variable "partition" {
 variable "cross_account_ids" {
   type        = list(string)
   description = "A list of strings containing the account IDs of AWS accounts that should have cross-account access to this secret"
-  default = null
+  default     = null
 }
 
 variable "empty_value" {
-  type = bool
+  type        = bool
   description = "Whether the secret should be generated without a value"
-  default = false
+  default     = false
 }
-variable "shared_secrets" {
-  type = list(string)
-  description = "Secrets that should be shared across accounts."
-  default = []
+variable "shared" {
+  type        = bool
+  description = "Whether secrets should be shared across accounts."
+  default     = false
 }
 
 variable "tags" {
@@ -86,13 +86,17 @@ variable "tags" {
 variable "regional_tags" {
   description = "a map of strings that contains regional level tags"
   type        = map(string)
-    default     = {}
-
+  default     = {}
 }
 
 variable "global_tags" {
   description = "a map of strings that contains global level tags"
   type        = map(string)
-    default     = {}
+  default     = {}
+}
 
+variable "recovery_window_in_days" {
+  description = "Number of days that AWS Secrets Manager waits before it can delete the secret."
+  type        = number
+  default     = 30
 }
