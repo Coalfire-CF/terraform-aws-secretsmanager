@@ -7,7 +7,7 @@ resource "aws_secretsmanager_secret" "this" {
   recovery_window_in_days = var.recovery_window_in_days
 }
 resource "aws_secretsmanager_secret_policy" "shared" {
-  for_each = var.shared ? var.names : []
+  for_each = var.shared ? toset(var.names) : []
 
   secret_arn = aws_secretsmanager_secret.this[each.key].arn
 
@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 
 resource "aws_secretsmanager_secret_version" "this" {
   for_each      = var.empty_value ? [] : toset(var.names)
-  secret_id     = values(aws_secretsmanager_secret.this)[*].id
+  secret_id     = aws_secretsmanager_secret.this[each.key].id
   secret_string = random_password.password[each.key].result
 
   lifecycle {
