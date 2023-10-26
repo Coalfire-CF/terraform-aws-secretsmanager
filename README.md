@@ -30,6 +30,8 @@ This module can be called as outlined below.
 
 The below example is how you can call secrets manager module to create secrets as needed. One important note is ensuring you exclude any characters for systems such as PGSQL. As there can be issues with the characters accepted by it. It's best to exclude `#$/_%&"'=`
 
+If secrets need to be shared between AWS accounts, set "shared = true" and also provide "cross_account_ids".
+
 ```hcl
 module "secrets" {
   source = "github.com/Coalfire-CF/terraform-aws-secretsmanager"
@@ -41,6 +43,7 @@ module "secrets" {
   override_special = "$%&!"
   kms_key_id = data.terraform_remote_state.setup.sm_kms_key_id
   path = ""
+  shared = true
   cross_account_ids = [""]
 }
 ```
