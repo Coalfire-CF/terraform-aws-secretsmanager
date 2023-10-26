@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "this" {
-  for_each                = var.names
+  for_each                = toset(var.names)
   name                    = "${var.path}${each.value}"
   kms_key_id              = var.kms_key_id
   tags                    = merge(var.tags, var.global_tags, var.regional_tags)
@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 }
 
 resource "aws_secretsmanager_secret_version" "this" {
-  for_each      = var.empty_value ? [] : var.names
+  for_each      = var.empty_value ? [] : toset(var.names)
   secret_id     = values(aws_secretsmanager_secret.this)[*].id
   secret_string = random_password.password[each.key].result
 
@@ -48,7 +48,7 @@ resource "aws_secretsmanager_secret_version" "this" {
 }
 
 resource "random_password" "password" {
-  for_each         = var.empty_value ? [] : var.names
+  for_each         = var.empty_value ? [] : toset(var.names)
   length           = var.length
   special          = var.special
   override_special = var.override_special
