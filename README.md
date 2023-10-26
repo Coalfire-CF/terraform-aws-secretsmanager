@@ -55,13 +55,14 @@ module "secrets" {
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | ~> 3.0 |
 
 ## Modules
 
@@ -75,7 +76,6 @@ No modules.
 | [aws_secretsmanager_secret_policy.shared](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_policy) | resource |
 | [aws_secretsmanager_secret_version.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
 | [random_password.password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
-| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_iam_policy_document.resource_policy_MA](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
@@ -95,8 +95,9 @@ No modules.
 | <a name="input_override_special"></a> [override\_special](#input\_override\_special) | Provide your own list of special characters | `string` | `"_%@!"` | no |
 | <a name="input_partition"></a> [partition](#input\_partition) | The AWS partition to use | `string` | n/a | yes |
 | <a name="input_path"></a> [path](#input\_path) | Path to organize secrets | `string` | n/a | yes |
+| <a name="input_recovery_window_in_days"></a> [recovery\_window\_in\_days](#input\_recovery\_window\_in\_days) | Number of days that AWS Secrets Manager waits before it can delete the secret. | `number` | `30` | no |
 | <a name="input_regional_tags"></a> [regional\_tags](#input\_regional\_tags) | a map of strings that contains regional level tags | `map(string)` | `{}` | no |
-| <a name="input_shared_secrets"></a> [shared\_secrets](#input\_shared\_secrets) | Secrets that should be shared across accounts. | `list(string)` | `[]` | no |
+| <a name="input_shared"></a> [shared](#input\_shared) | Whether secrets should be shared across accounts. | `bool` | `false` | no |
 | <a name="input_special"></a> [special](#input\_special) | Include special characters in random password string | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the resource | `map(string)` | `{}` | no |
 
