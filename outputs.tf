@@ -3,8 +3,6 @@ output "secret_arns" {
   value       = {
     for k, v in aws_secretsmanager_secret.this : k => v.arn
   }
-  
-  #values(aws_secretsmanager_secret.this)[*].arn
 }
 
 output "secrets" {
@@ -13,8 +11,6 @@ output "secrets" {
   value       = {
     for k, v in aws_secretsmanager_secret_version.this : k => v.secret_string
   }
-  
-  #values(aws_secretsmanager_secret_version.this)[*].secret_string
 }
 
 output "names" {
