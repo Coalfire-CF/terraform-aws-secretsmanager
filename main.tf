@@ -1,7 +1,7 @@
 resource "aws_secretsmanager_secret" "this" {
   for_each                = var.secret_naming_descrip
-  name                    = "${var.path}${each.value}"
-  description             = each.key ? null : ""
+  name                    = "${var.path}${var.secret_naming_descrip[*].name}"
+  description             = "${var.secret_naming_descrip[*].value}" ? null : ""
   kms_key_id              = var.kms_key_id
   tags                    = merge(var.tags, var.global_tags, var.regional_tags)
   policy                  = var.shared ? null : "{}"
@@ -10,7 +10,7 @@ resource "aws_secretsmanager_secret" "this" {
 resource "aws_secretsmanager_secret_policy" "shared" {
   for_each = var.shared ? var.secret_naming_descrip : {}
 
-  secret_arn = aws_secretsmanager_secret.this[each.key].arn
+  secret_arn = aws_secretsmanager_secret.this["${var.secret_naming_descrip[*].name}"].arn
 
   policy = data.aws_iam_policy_document.resource_policy_MA.json
 }
@@ -38,8 +38,8 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 
 resource "aws_secretsmanager_secret_version" "this" {
   for_each      = var.empty_value ? {} : var.secret_naming_descrip
-  secret_id     = aws_secretsmanager_secret.this[each.key].id
-  secret_string = random_password.password[each.key].result
+  secret_id     = aws_secretsmanager_secret.this["${var.secret_naming_descrip[*].name}"].id
+  secret_string = random_password.password["${var.secret_naming_descrip[*].name}"].result
 
   lifecycle {
     ignore_changes = [
