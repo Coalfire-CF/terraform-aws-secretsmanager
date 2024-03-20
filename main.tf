@@ -1,7 +1,7 @@
 resource "aws_secretsmanager_secret" "this" {
   for_each                = {for s in var.secrets : s.secret_name => s}
   name                    = "${var.path}${each.key}"
-  description             = try(length(each.value.secret_description), 0) > 0 each.value.secret_description : "secret for ${each.key}"
+  description             = coalesce(each.value.secret_description, "secret for ${each.key}")
   kms_key_id              = var.kms_key_id
   tags                    = merge(var.tags, var.global_tags, var.regional_tags)
   policy                  = var.shared ? null : "{}"
