@@ -14,7 +14,7 @@ output "secrets" {
 }
 
 output "names" {
-  value       = var.names
+  value       = values(aws_secretsmanager_secret.this)[*].name
   description = "Returns list of secret names to be created."
 }
 

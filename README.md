@@ -33,17 +33,31 @@ The below example is how you can call secrets manager module to create secrets a
 If secrets need to be shared between AWS accounts, set "shared = true" and also provide "cross_account_ids".
 
 ```hcl
+locals{
+  secrets = [
+    {
+    secret_name = "test123"
+    secret_description = "test service account for the 123 service"
+    }, 
+    {
+     secret_name = "svc_test456"
+    secret_description = ""
+    }
+  ]
+}
+
+
 module "secrets" {
   source = "github.com/Coalfire-CF/terraform-aws-secretsmanager"
   
   partition = var.partition
-  names = [""]
+  secrets = local.secrets
   length = 15
-  special = ""
+  special = true
   override_special = "$%&!"
   kms_key_id = data.terraform_remote_state.setup.sm_kms_key_id
   path = ""
-  shared = true
+  shared = false
   cross_account_ids = [""]
 }
 ```
@@ -91,12 +105,12 @@ No modules.
 | <a name="input_min_numeric"></a> [min\_numeric](#input\_min\_numeric) | Minimum number of numeric characters | `number` | `1` | no |
 | <a name="input_min_special"></a> [min\_special](#input\_min\_special) | Minimum number of special characters | `number` | `1` | no |
 | <a name="input_min_upper"></a> [min\_upper](#input\_min\_upper) | Minimum number of upper case characters | `number` | `1` | no |
-| <a name="input_names"></a> [names](#input\_names) | Specifies the friendly name of the new secrets to be created | `list(string)` | n/a | yes |
 | <a name="input_override_special"></a> [override\_special](#input\_override\_special) | Provide your own list of special characters | `string` | `"_%@!"` | no |
 | <a name="input_partition"></a> [partition](#input\_partition) | The AWS partition to use | `string` | n/a | yes |
 | <a name="input_path"></a> [path](#input\_path) | Path to organize secrets | `string` | n/a | yes |
 | <a name="input_recovery_window_in_days"></a> [recovery\_window\_in\_days](#input\_recovery\_window\_in\_days) | Number of days that AWS Secrets Manager waits before it can delete the secret. | `number` | `30` | no |
 | <a name="input_regional_tags"></a> [regional\_tags](#input\_regional\_tags) | a map of strings that contains regional level tags | `map(string)` | `{}` | no |
+| <a name="input_secrets"></a> [secrets](#input\_secrets) | Specifies the friendly name of the new secrets to be created as key and an optional value field for descriptions | `list(map(string))` | n/a | yes |
 | <a name="input_shared"></a> [shared](#input\_shared) | Whether secrets should be shared across accounts. | `bool` | `false` | no |
 | <a name="input_special"></a> [special](#input\_special) | Include special characters in random password string | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the resource | `map(string)` | `{}` | no |
