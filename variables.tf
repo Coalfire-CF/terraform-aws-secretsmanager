@@ -1,6 +1,6 @@
-variable "names" {
-  type        = list(string)
-  description = "Specifies the friendly name of the new secrets to be created"
+variable "secret_naming_descrip" {
+  type        = list(map(string))
+  description = "Specifies the friendly name of the new secrets to be created as key and an optional value field for descriptions"
 }
 
 variable "length" {
