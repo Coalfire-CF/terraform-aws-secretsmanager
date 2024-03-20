@@ -1,5 +1,5 @@
-variable "secret_naming_descrip" {
-  type        = map(string)
+variable "secrets" {
+  type        = map(map(string))
   description = "Specifies the friendly name of the new secrets to be created as key and an optional value field for descriptions"
 }
 

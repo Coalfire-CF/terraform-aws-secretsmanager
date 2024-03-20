@@ -1,16 +1,16 @@
 resource "aws_secretsmanager_secret" "this" {
-  for_each                = toset([for k,v in var.secret_naming_descrip: k ])
-  name                    = "${var.path}${(keys(var.secret_naming_descrip))}"
-  description             = "${var.secret_naming_descrip[*].value}" ? null : ""
+  for_each                = {for s in var.secrets : s.secret_name => s}
+  name                    = "${var.path}${each.key}"
+  description             = "${each.value.secret_description}" ? null : ""
   kms_key_id              = var.kms_key_id
   tags                    = merge(var.tags, var.global_tags, var.regional_tags)
   policy                  = var.shared ? null : "{}"
   recovery_window_in_days = var.recovery_window_in_days
 }
 resource "aws_secretsmanager_secret_policy" "shared" {
-  for_each = toset([for k,v in var.secret_naming_descrip: k ])
+  for_each                = {for s in var.secrets : s.secret_name => s}
 
-  secret_arn = aws_secretsmanager_secret.this["${(keys(var.secret_naming_descrip))}"].arn
+  secret_arn = aws_secretsmanager_secret.this["${each.key}"].arn
 
   policy = data.aws_iam_policy_document.resource_policy_MA.json
 }
@@ -37,9 +37,9 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 }
 
 resource "aws_secretsmanager_secret_version" "this" {
-  for_each      = toset([for k,v in var.secret_naming_descrip: k ])
-  secret_id     = aws_secretsmanager_secret.this["${(keys(var.secret_naming_descrip))}"].id
-  secret_string = random_password.password["${(keys(var.secret_naming_descrip))}"].result
+  for_each                = {for s in var.secrets : s.secret_name => s}
+  secret_id     = aws_secretsmanager_secret.this["${each.key}"].id
+  secret_string = random_password.password["${each.key}"].result
 
   lifecycle {
     ignore_changes = [
@@ -49,7 +49,7 @@ resource "aws_secretsmanager_secret_version" "this" {
 }
 
 resource "random_password" "password" {
-  for_each         = toset([for k,v in var.secret_naming_descrip: k ])
+  for_each                = {for s in var.secrets : s.secret_name => s}
   length           = var.length
   special          = var.special
   override_special = var.override_special

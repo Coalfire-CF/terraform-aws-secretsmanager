@@ -33,15 +33,25 @@ The below example is how you can call secrets manager module to create secrets a
 If secrets need to be shared between AWS accounts, set "shared = true" and also provide "cross_account_ids".
 
 ```hcl
+locals{
+  secrets = [
+    {
+    secret_name = "test123"
+    secret_description = "test service account for the 123 service"
+    } 
+    {
+     secret_name = "svc_test456"
+    secret_description = "test service account for the 456 service""
+    }
+  ]
+}
+
+
 module "secrets" {
   source = "github.com/Coalfire-CF/terraform-aws-secretsmanager"
   
   partition = var.partition
-  secret_naming_descrip = [
-    {
-    "svc_test123" = "test service account for the 123 service"
-    }
-  ]
+  secrets = local.secrets
   length = 15
   special = true
   override_special = "$%&!"
