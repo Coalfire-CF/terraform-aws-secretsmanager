@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 }
 
 resource "aws_secretsmanager_secret_version" "this" {
-  for_each      = var.empty_value ? {} : toset([for k,v in var.secret_naming_descrip: k ])
+  for_each      = toset([for k,v in var.secret_naming_descrip: k ])
   secret_id     = aws_secretsmanager_secret.this["${(keys(var.secret_naming_descrip))}"].id
   secret_string = random_password.password["${(keys(var.secret_naming_descrip))}"].result
 
@@ -49,7 +49,7 @@ resource "aws_secretsmanager_secret_version" "this" {
 }
 
 resource "random_password" "password" {
-  for_each         = var.empty_value ? {} : toset([for k,v in var.secret_naming_descrip: k ])
+  for_each         = toset([for k,v in var.secret_naming_descrip: k ])
   length           = var.length
   special          = var.special
   override_special = var.override_special
