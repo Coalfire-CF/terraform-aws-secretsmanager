@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "this" {
-  for_each                = local.secret_input
+  for_each                = var.secret_naming_descrip
   name                    = "${var.path}${each.value}"
   description             = each.key ? null : ""
   kms_key_id              = var.kms_key_id
@@ -8,7 +8,7 @@ resource "aws_secretsmanager_secret" "this" {
   recovery_window_in_days = var.recovery_window_in_days
 }
 resource "aws_secretsmanager_secret_policy" "shared" {
-  for_each = var.shared ? local.secret_input : []
+  for_each = var.shared ? var.secret_naming_descrip : {}
 
   secret_arn = aws_secretsmanager_secret.this[each.key].arn
 
@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 }
 
 resource "aws_secretsmanager_secret_version" "this" {
-  for_each      = var.empty_value ? [] : local.secret_input
+  for_each      = var.empty_value ? {} : var.secret_naming_descrip
   secret_id     = aws_secretsmanager_secret.this[each.key].id
   secret_string = random_password.password[each.key].result
 
@@ -49,7 +49,7 @@ resource "aws_secretsmanager_secret_version" "this" {
 }
 
 resource "random_password" "password" {
-  for_each         = var.empty_value ? [] : local.secret_input
+  for_each         = var.empty_value ? {} : var.secret_naming_descrip
   length           = var.length
   special          = var.special
   override_special = var.override_special
