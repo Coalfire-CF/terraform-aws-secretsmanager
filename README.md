@@ -41,7 +41,7 @@ locals{
     }, 
     {
      secret_name = "svc_test456"
-    secret_description = "test service account for the 456 service"
+    secret_description = ""
     }
   ]
 }
