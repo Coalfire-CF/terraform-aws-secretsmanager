@@ -8,7 +8,7 @@ resource "aws_secretsmanager_secret" "this" {
   recovery_window_in_days = var.recovery_window_in_days
 }
 resource "aws_secretsmanager_secret_policy" "shared" {
-  for_each = var.shared ? toset([for k,v in var.secret_naming_descrip: k ]) : {}
+  for_each = toset([for k,v in var.secret_naming_descrip: k ])
 
   secret_arn = aws_secretsmanager_secret.this["${(keys(var.secret_naming_descrip))}"].arn
 
