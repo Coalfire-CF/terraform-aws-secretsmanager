@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "this" {
-  for_each                = toset(local.secret_input)
+  for_each                = for_each(local.secret_input)
   name                    = "${var.path}${each.value}"
   description             = each.key ? null : ""
   kms_key_id              = var.kms_key_id
