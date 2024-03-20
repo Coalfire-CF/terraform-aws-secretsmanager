@@ -37,9 +37,13 @@ module "secrets" {
   source = "github.com/Coalfire-CF/terraform-aws-secretsmanager"
   
   partition = var.partition
-  names = [""]
+  secret_naming_descrip = [
+    {
+    "svc_test123" = "test service account for the 123 service"
+    }
+  ]
   length = 15
-  special = ""
+  special = true
   override_special = "$%&!"
   kms_key_id = data.terraform_remote_state.setup.sm_kms_key_id
   path = ""
