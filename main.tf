@@ -1,6 +1,6 @@
 resource "aws_secretsmanager_secret" "this" {
-  for_each                = var.secret_naming_descrip
-  name                    = "${var.path}${var.secret_naming_descrip[*].name}"
+  for_each                = toset([for k,v in var.secret_naming_descrip: k ])
+  name                    = "${var.path}${(keys(var.secret_naming_descrip))}"
   description             = "${var.secret_naming_descrip[*].value}" ? null : ""
   kms_key_id              = var.kms_key_id
   tags                    = merge(var.tags, var.global_tags, var.regional_tags)
@@ -8,9 +8,9 @@ resource "aws_secretsmanager_secret" "this" {
   recovery_window_in_days = var.recovery_window_in_days
 }
 resource "aws_secretsmanager_secret_policy" "shared" {
-  for_each = var.shared ? var.secret_naming_descrip : {}
+  for_each = var.shared ? toset([for k,v in var.secret_naming_descrip: k ]) : {}
 
-  secret_arn = aws_secretsmanager_secret.this["${var.secret_naming_descrip[*].name}"].arn
+  secret_arn = aws_secretsmanager_secret.this["${(keys(var.secret_naming_descrip))}"].arn
 
   policy = data.aws_iam_policy_document.resource_policy_MA.json
 }
@@ -37,9 +37,9 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 }
 
 resource "aws_secretsmanager_secret_version" "this" {
-  for_each      = var.empty_value ? {} : var.secret_naming_descrip
-  secret_id     = aws_secretsmanager_secret.this["${var.secret_naming_descrip[*].name}"].id
-  secret_string = random_password.password["${var.secret_naming_descrip[*].name}"].result
+  for_each      = var.empty_value ? {} : toset([for k,v in var.secret_naming_descrip: k ])
+  secret_id     = aws_secretsmanager_secret.this["${(keys(var.secret_naming_descrip))}"].id
+  secret_string = random_password.password["${(keys(var.secret_naming_descrip))}"].result
 
   lifecycle {
     ignore_changes = [
@@ -49,7 +49,7 @@ resource "aws_secretsmanager_secret_version" "this" {
 }
 
 resource "random_password" "password" {
-  for_each         = var.empty_value ? {} : var.secret_naming_descrip
+  for_each         = var.empty_value ? {} : toset([for k,v in var.secret_naming_descrip: k ])
   length           = var.length
   special          = var.special
   override_special = var.override_special
