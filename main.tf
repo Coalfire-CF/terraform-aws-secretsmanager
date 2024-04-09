@@ -1,15 +1,17 @@
 resource "aws_secretsmanager_secret" "this" {
-  for_each                = toset(var.names)
-  name                    = "${var.path}${each.value}"
+  for_each                = {for s in var.secrets : s.secret_name => s}
+  name                    = "${var.path}${each.key}"
+  description             = coalesce(each.value.secret_description, "secret for ${each.key}")
   kms_key_id              = var.kms_key_id
   tags                    = merge(var.tags, var.global_tags, var.regional_tags)
   policy                  = var.shared ? null : "{}"
   recovery_window_in_days = var.recovery_window_in_days
 }
-resource "aws_secretsmanager_secret_policy" "shared" {
-  for_each = var.shared ? toset(var.names) : []
 
-  secret_arn = aws_secretsmanager_secret.this[each.key].arn
+resource "aws_secretsmanager_secret_policy" "shared" {
+  for_each = var.shared ? {for s in var.secrets : s.secret_name => s} : {}
+
+  secret_arn = aws_secretsmanager_secret.this["${each.key}"].arn
 
   policy = data.aws_iam_policy_document.resource_policy_MA.json
 }
@@ -23,12 +25,10 @@ data "aws_iam_policy_document" "resource_policy_MA" {
         "secretsmanager:ListSecrets",
         "secretsmanager:GetSecretValue",
         "secretsmanager:DescribeSecret",
-        "secretsmanager:ListSecretVersionIds"
-      ]
+        "secretsmanager:ListSecretVersionIds" ]
       resources = values(aws_secretsmanager_secret.this)[*].arn
       principals {
-        identifiers = [
-        "arn:${var.partition}:iam::${statement.value}:root"]
+        identifiers = [ "arn:${var.partition}:iam::${statement.value}:root"]
         type = "AWS"
       }
     }
@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 }
 
 resource "aws_secretsmanager_secret_version" "this" {
-  for_each      = var.empty_value ? [] : toset(var.names)
+  for_each      = var.empty_value ? {} : {for s in var.secrets : s.secret_name => s}
   secret_id     = aws_secretsmanager_secret.this[each.key].id
   secret_string = random_password.password[each.key].result
 
@@ -48,7 +48,7 @@ resource "aws_secretsmanager_secret_version" "this" {
 }
 
 resource "random_password" "password" {
-  for_each         = var.empty_value ? [] : toset(var.names)
+  for_each         = var.empty_value ? {} : {for s in var.secrets : s.secret_name => s}
   length           = var.length
   special          = var.special
   override_special = var.override_special
