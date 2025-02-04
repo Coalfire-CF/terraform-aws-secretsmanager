@@ -137,16 +137,14 @@ module "gitlab_ad_credentials" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.5.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.10.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.85.0, < 6.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | ~> 3.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.85.0, < 6.0.0 |
 
 ## Modules
 
@@ -159,30 +157,33 @@ No modules.
 | [aws_secretsmanager_secret.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
 | [aws_secretsmanager_secret_policy.shared](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_policy) | resource |
 | [aws_secretsmanager_secret_version.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
-| [random_password.password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [aws_iam_policy_document.resource_policy_MA](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_secretsmanager_random_password.random_passwords](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_random_password) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_cross_account_ids"></a> [cross\_account\_ids](#input\_cross\_account\_ids) | A list of strings containing the account IDs of AWS accounts that should have cross-account access to this secret | `list(string)` | `null` | no |
+| <a name="input_cross_account_ids"></a> [cross\_account\_ids](#input\_cross\_account\_ids) | A list of strings containing the account IDs of AWS accounts that should have cross-account access to this secret | `list(string)` | `[]` | no |
 | <a name="input_empty_value"></a> [empty\_value](#input\_empty\_value) | Whether the secret should be generated without a value | `bool` | `false` | no |
+| <a name="input_exclude_characters"></a> [exclude\_characters](#input\_exclude\_characters) | String of the characters that you don't want in the password | `string` | `"\" # $ % & ' ( ) * + , - . / : ; < = > ? [ \\ ] ^ ` { \| } ~" | no |
+| <a name="input_exclude_lowercase"></a> [exclude\_lowercase](#input\_exclude\_lowercase) | Specifies whether to exclude lowercase letters from the password | `bool` | `false` | no |
+| <a name="input_exclude_numbers"></a> [exclude\_numbers](#input\_exclude\_numbers) | Specifies whether to exclude numbers from the password | `bool` | `false` | no |
+| <a name="input_exclude_punctuation"></a> [exclude\_punctuation](#input\_exclude\_punctuation) | Specifies whether to exclude punctuation characters from the password: ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ \_ ` { | } ~` | `bool` | `false` | no |
+| <a name="input_exclude_uppercase"></a> [exclude\_uppercase](#input\_exclude\_uppercase) | Specifies whether to exclude uppercase letters from the password | `bool` | `false` | no |
 | <a name="input_global_tags"></a> [global\_tags](#input\_global\_tags) | a map of strings that contains global level tags | `map(string)` | `{}` | no |
+| <a name="input_include_space"></a> [include\_space](#input\_include\_space) | Specifies whether to include the space character | `bool` | `false` | no |
 | <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | Specifies the ARN or alias of the AWS KMS customer master key (CMK) to be used to encrypt the secret values in the versions stored in this secret. | `string` | n/a | yes |
-| <a name="input_length"></a> [length](#input\_length) | The length of the password to be generated | `number` | `15` | no |
-| <a name="input_min_lower"></a> [min\_lower](#input\_min\_lower) | Minimum number of lower case characters | `number` | `1` | no |
-| <a name="input_min_numeric"></a> [min\_numeric](#input\_min\_numeric) | Minimum number of numeric characters | `number` | `1` | no |
-| <a name="input_min_special"></a> [min\_special](#input\_min\_special) | Minimum number of special characters | `number` | `1` | no |
-| <a name="input_min_upper"></a> [min\_upper](#input\_min\_upper) | Minimum number of upper case characters | `number` | `1` | no |
-| <a name="input_override_special"></a> [override\_special](#input\_override\_special) | Provide your own list of special characters | `string` | `"_%@!"` | no |
+| <a name="input_organization_ids"></a> [organization\_ids](#input\_organization\_ids) | The AWS Organization ID to share secrets with. If specified, cross\_account\_ids will be ignored | `list(string)` | `[]` | no |
 | <a name="input_partition"></a> [partition](#input\_partition) | The AWS partition to use | `string` | n/a | yes |
+| <a name="input_password_length"></a> [password\_length](#input\_password\_length) | Length of the password | `number` | `15` | no |
 | <a name="input_path"></a> [path](#input\_path) | Path to organize secrets | `string` | n/a | yes |
 | <a name="input_recovery_window_in_days"></a> [recovery\_window\_in\_days](#input\_recovery\_window\_in\_days) | Number of days that AWS Secrets Manager waits before it can delete the secret. | `number` | `30` | no |
 | <a name="input_regional_tags"></a> [regional\_tags](#input\_regional\_tags) | a map of strings that contains regional level tags | `map(string)` | `{}` | no |
+| <a name="input_replicas"></a> [replicas](#input\_replicas) | List of regions to replicate the secret to. Each replica can optionally specify a KMS key | <pre>list(object({<br/>    region = string<br/>    kms_key_arn = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_require_each_included_type"></a> [require\_each\_included\_type](#input\_require\_each\_included\_type) | Specifies whether to include at least one upper and lowercase letter, one number, and one punctuation | `bool` | `true` | no |
 | <a name="input_secrets"></a> [secrets](#input\_secrets) | Specifies the friendly name of the new secrets to be created as key and an optional value field for descriptions | `list(map(string))` | n/a | yes |
 | <a name="input_shared"></a> [shared](#input\_shared) | Whether secrets should be shared across accounts. | `bool` | `false` | no |
-| <a name="input_special"></a> [special](#input\_special) | Include special characters in random password string | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the resource | `map(string)` | `{}` | no |
 
 ## Outputs
