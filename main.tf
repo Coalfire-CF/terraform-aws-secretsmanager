@@ -72,7 +72,7 @@ data "aws_iam_policy_document" "resource_policy_MA" {
   }
 }
 
-resource "aws_secretsmanager_secret_version" "this" {
+ephemeral "aws_secretsmanager_secret_version" "this" {
   for_each      = var.empty_value ? {} : { for s in var.secrets : s.secret_name => s }
 
   secret_id     = aws_secretsmanager_secret.this[each.key].id
