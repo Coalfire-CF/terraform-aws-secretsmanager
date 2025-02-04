@@ -72,11 +72,17 @@ data "aws_iam_policy_document" "resource_policy_MA" {
   }
 }
 
-ephemeral "aws_secretsmanager_secret_version" "this" {
+resource "aws_secretsmanager_secret_version" "this" {
   for_each      = var.empty_value ? {} : { for s in var.secrets : s.secret_name => s }
 
   secret_id     = aws_secretsmanager_secret.this[each.key].id
   secret_string = data.aws_secretsmanager_random_password.random_passwords[each.key].random_password
+
+  lifecycle {
+    ignore_changes = [
+      secret_string
+    ]
+  }
 }
 
 data "aws_secretsmanager_random_password" "random_passwords" {
