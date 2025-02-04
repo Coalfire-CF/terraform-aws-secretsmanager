@@ -28,38 +28,108 @@ This module can be called as outlined below.
 
 ## Usage
 
-The below example is how you can call secrets manager module to create secrets as needed. One important note is ensuring you exclude any characters for systems such as PGSQL. As there can be issues with the characters accepted by it. It's best to exclude `#$/_%&"'=`
+The below examples are how you can call secrets manager module to create secrets as needed. 
 
-If secrets need to be shared between AWS accounts, set "shared = true" and also provide "cross_account_ids".
-
+### Shared Secrets
+Set "shared = true" and provide the AWS Organization IDs that you want to share the secrets with:
 ```hcl
-locals{
+data "aws_organizations_organization" "current" {
+  provider = aws.current
+}
+
+module "gitlab_ad_credentials" {
+  source = "github.com/Coalfire-CF/terraform-aws-secretsmanager?ref=v2.1.0"
+  providers = {
+    aws = aws.current
+  }
+
+  kms_key_id = data.terraform_remote_state.account-setup.outputs.sm_kms_key_arn
   secrets = [
     {
-    secret_name = "test123"
-    secret_description = "test service account for the 123 service"
-    }, 
+      secret_name        = "svc_gitlab"
+      secret_description = "Unprivileged AD user with read-only access intended to read LDAP."
+    }
+  ]
+  path                    = "${var.ad_secrets_path}credentials/"
+  partition               = data.aws_partition.current.partition
+  recovery_window_in_days = var.recovery_window_in_days
+
+  # Random Password
+  password_length = 20
+
+  # Sharing
+  shared           = true
+  organization_ids = [data.aws_organizations_organization.current.id]
+}
+```
+
+OR
+
+If secrets need to be shared between AWS accounts, set "shared = true" and also provide "cross_account_ids".
+```hcl
+module "gitlab_ad_credentials" {
+  source = "github.com/Coalfire-CF/terraform-aws-secretsmanager?ref=v2.1.0"
+  providers = {
+    aws = aws.current
+  }
+
+  kms_key_id = data.terraform_remote_state.account-setup.outputs.sm_kms_key_arn
+  secrets = [
     {
-     secret_name = "svc_test456"
-    secret_description = ""
+      secret_name        = "svc_gitlab"
+      secret_description = "Unprivileged AD user with read-only access intended to read LDAP."
+    }
+  ]
+  path                    = "${var.ad_secrets_path}credentials/"
+  partition               = data.aws_partition.current.partition
+  recovery_window_in_days = var.recovery_window_in_days
+
+  # Random Password
+  password_length = 20
+
+  # Sharing
+  shared            = true
+  cross_account_ids = ["XXXXXXXXXXXX"]
+}
+```
+
+### Cross-region Replication
+This is more of an edge use-case.
+Provide a list of maps to "replicas" which includes the AWS Region you want to replicate the secret to, as well as a KMS Key ARN for the key you want to use to encrypt the secret.
+```hcl
+module "gitlab_ad_credentials" {
+  source = "github.com/Coalfire-CF/terraform-aws-secretsmanager?ref=v2.1.0"
+  providers = {
+    aws = aws.current
+  }
+
+  kms_key_id = data.terraform_remote_state.account-setup.outputs.sm_kms_key_arn
+  secrets = [
+    {
+      secret_name        = "svc_gitlab"
+      secret_description = "Unprivileged AD user with read-only access intended to read LDAP."
+    }
+  ]
+  path                    = "${var.ad_secrets_path}credentials/"
+  partition               = data.aws_partition.current.partition
+  recovery_window_in_days = var.recovery_window_in_days
+
+  # Random Password
+  password_length = 20
+
+  # Sharing
+  shared           = true
+  organization_ids = [data.aws_organizations_organization.current.id]
+
+  # Replication
+  replicas = [
+    {
+      region = "us-gov-east-1"
+      kms_key_arn = var.replica_region_sm_kms_key_arn
     }
   ]
 }
 
-
-module "secrets" {
-  source = "github.com/Coalfire-CF/terraform-aws-secretsmanager"
-  
-  partition = var.partition
-  secrets = local.secrets
-  length = 15
-  special = true
-  override_special = "$%&!"
-  kms_key_id = data.terraform_remote_state.setup.sm_kms_key_id
-  path = ""
-  shared = false
-  cross_account_ids = [""]
-}
 ```
 
 <!-- BEGIN_TF_DOCS -->
