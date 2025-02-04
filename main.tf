@@ -77,12 +77,6 @@ ephemeral "aws_secretsmanager_secret_version" "this" {
 
   secret_id     = aws_secretsmanager_secret.this[each.key].id
   secret_string = data.aws_secretsmanager_random_password.random_passwords[each.key].random_password
-
-  lifecycle {
-    ignore_changes = [
-      secret_string
-    ]
-  }
 }
 
 data "aws_secretsmanager_random_password" "random_passwords" {
