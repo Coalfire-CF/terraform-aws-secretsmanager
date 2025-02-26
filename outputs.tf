@@ -24,6 +24,6 @@ output "path" {
 }
 
 output "secret_iam_policy_doc_json" {
-  value       = data.aws_iam_policy_document.resource_policy_MA.json
+  value       = try(data.aws_iam_policy_document.resource_policy_MA[0].json, null)
   description = "JSON doc of the policy output to use on roles if desired"
 }
