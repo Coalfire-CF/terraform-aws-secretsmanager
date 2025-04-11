@@ -80,7 +80,9 @@ variable "replicas" {
 variable "exclude_characters" {
   description = "String of the characters that you don't want in the password"
   type        = string
-  default     = "\" # $ % & ' ( ) * + , - . / : ; < = > ? [ \\ ] ^ ` { | } ~" # Include some punctuations, but avoid ones known to break database passwords
+  default     = "\" # $ % & ' ( ) * + , . / : ; < = > ? @ [ \\ ] ^ ` { | } ~"
+  # Permitted characters are: ! _ -
+  # The defaults are intended to be generally safe for use in various RDS database types, Linux, and Windows.
 }
 
 variable "exclude_lowercase" {
