@@ -166,7 +166,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_cross_account_ids"></a> [cross\_account\_ids](#input\_cross\_account\_ids) | A list of strings containing the account IDs of AWS accounts that should have cross-account access to this secret | `list(string)` | `[]` | no |
 | <a name="input_empty_value"></a> [empty\_value](#input\_empty\_value) | Whether the secret should be generated without a value | `bool` | `false` | no |
-| <a name="input_exclude_characters"></a> [exclude\_characters](#input\_exclude\_characters) | String of the characters that you don't want in the password | `string` | `"\" # $ % & ' ( ) * + , - . / : ; < = > ? [ \\ ] ^ ` { \| } ~" | no |
+| <a name="input_exclude_characters"></a> [exclude\_characters](#input\_exclude\_characters) | String of the characters that you don't want in the password | `string` | `"\" # $ % & ' ( ) * + , . / : ; < = > ? @ [ \\ ] ^ ` { \| } ~" | no |
 | <a name="input_exclude_lowercase"></a> [exclude\_lowercase](#input\_exclude\_lowercase) | Specifies whether to exclude lowercase letters from the password | `bool` | `false` | no |
 | <a name="input_exclude_numbers"></a> [exclude\_numbers](#input\_exclude\_numbers) | Specifies whether to exclude numbers from the password | `bool` | `false` | no |
 | <a name="input_exclude_punctuation"></a> [exclude\_punctuation](#input\_exclude\_punctuation) | Specifies whether to exclude punctuation characters from the password: ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ \_ ` { | } ~` | `bool` | `false` | no |
