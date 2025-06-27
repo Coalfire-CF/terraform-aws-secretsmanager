@@ -142,11 +142,16 @@ SSO-based authentication (via IAM Identity Center SSO):
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.10.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.85.0, < 6.0.0 |
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.85.0, < 6.0.0 |
 
 ## Modules
 
@@ -154,15 +159,49 @@ No modules.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [aws_secretsmanager_secret.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
+| [aws_secretsmanager_secret_policy.shared](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_policy) | resource |
+| [aws_secretsmanager_secret_version.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
+| [aws_iam_policy_document.resource_policy_MA](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_secretsmanager_random_password.random_passwords](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_random_password) | data source |
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_cross_account_ids"></a> [cross\_account\_ids](#input\_cross\_account\_ids) | A list of strings containing the account IDs of AWS accounts that should have cross-account access to this secret | `list(string)` | `[]` | no |
+| <a name="input_empty_value"></a> [empty\_value](#input\_empty\_value) | Whether the secret should be generated without a value | `bool` | `false` | no |
+| <a name="input_exclude_characters"></a> [exclude\_characters](#input\_exclude\_characters) | String of the characters that you don't want in the password | `string` | `"\" # $ % & ' ( ) * + , . / : ; < = > ? @ [ \\ ] ^ ` { \| } ~" | no |
+| <a name="input_exclude_lowercase"></a> [exclude\_lowercase](#input\_exclude\_lowercase) | Specifies whether to exclude lowercase letters from the password | `bool` | `false` | no |
+| <a name="input_exclude_numbers"></a> [exclude\_numbers](#input\_exclude\_numbers) | Specifies whether to exclude numbers from the password | `bool` | `false` | no |
+| <a name="input_exclude_punctuation"></a> [exclude\_punctuation](#input\_exclude\_punctuation) | Specifies whether to exclude punctuation characters from the password: ! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ \_ ` { | } ~` | `bool` | `false` | no |
+| <a name="input_exclude_uppercase"></a> [exclude\_uppercase](#input\_exclude\_uppercase) | Specifies whether to exclude uppercase letters from the password | `bool` | `false` | no |
+| <a name="input_global_tags"></a> [global\_tags](#input\_global\_tags) | a map of strings that contains global level tags | `map(string)` | `{}` | no |
+| <a name="input_include_space"></a> [include\_space](#input\_include\_space) | Specifies whether to include the space character | `bool` | `false` | no |
+| <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | Specifies the ARN or alias of the AWS KMS customer master key (CMK) to be used to encrypt the secret values in the versions stored in this secret. | `string` | n/a | yes |
+| <a name="input_organization_ids"></a> [organization\_ids](#input\_organization\_ids) | The AWS Organization ID to share secrets with. If specified, cross\_account\_ids will be ignored | `list(string)` | `[]` | no |
+| <a name="input_partition"></a> [partition](#input\_partition) | The AWS partition to use | `string` | n/a | yes |
+| <a name="input_password_length"></a> [password\_length](#input\_password\_length) | Length of the password | `number` | `15` | no |
+| <a name="input_path"></a> [path](#input\_path) | Path to organize secrets | `string` | n/a | yes |
+| <a name="input_recovery_window_in_days"></a> [recovery\_window\_in\_days](#input\_recovery\_window\_in\_days) | Number of days that AWS Secrets Manager waits before it can delete the secret. | `number` | `30` | no |
+| <a name="input_regional_tags"></a> [regional\_tags](#input\_regional\_tags) | a map of strings that contains regional level tags | `map(string)` | `{}` | no |
+| <a name="input_replicas"></a> [replicas](#input\_replicas) | List of regions to replicate the secret to. Each replica can optionally specify a KMS key | <pre>list(object({<br/>    region      = string<br/>    kms_key_arn = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_require_each_included_type"></a> [require\_each\_included\_type](#input\_require\_each\_included\_type) | Specifies whether to include at least one upper and lowercase letter, one number, and one punctuation | `bool` | `true` | no |
+| <a name="input_secrets"></a> [secrets](#input\_secrets) | Specifies the friendly name of the new secrets to be created as key and an optional value field for descriptions | `list(map(string))` | n/a | yes |
+| <a name="input_shared"></a> [shared](#input\_shared) | Whether secrets should be shared across accounts. | `bool` | `false` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the resource | `map(string)` | `{}` | no |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_names"></a> [names](#output\_names) | Returns list of secret names to be created. |
+| <a name="output_path"></a> [path](#output\_path) | Path to secret values |
+| <a name="output_secret_arns"></a> [secret\_arns](#output\_secret\_arns) | The ARN values of the generated secrets |
+| <a name="output_secret_iam_policy_doc_json"></a> [secret\_iam\_policy\_doc\_json](#output\_secret\_iam\_policy\_doc\_json) | JSON doc of the policy output to use on roles if desired |
+| <a name="output_secrets"></a> [secrets](#output\_secrets) | Returns all secrets generated by the secrets manager module |
 <!-- END_TF_DOCS -->
 
 ## Contributing
