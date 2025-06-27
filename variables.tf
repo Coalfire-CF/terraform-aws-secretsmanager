@@ -69,7 +69,7 @@ variable "organization_ids" {
 
 variable "replicas" {
   type = list(object({
-    region = string
+    region      = string
     kms_key_arn = optional(string)
   }))
   description = "List of regions to replicate the secret to. Each replica can optionally specify a KMS key"
