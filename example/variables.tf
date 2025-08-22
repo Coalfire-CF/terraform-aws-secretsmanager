@@ -1,6 +1,16 @@
-variable "secrets" {
-  type        = list(map(string))
-  description = "Specifies the friendly name of the new secrets to be created as key and an optional value field for descriptions"
+variable "is_gov" {
+  description = "Whether or not the environment is being deployed in GovCloud"
+  type        = bool
+}
+
+variable "aws_region" {
+  description = "AWS Region deploying into"
+  type        = string
+}
+
+variable "profile" {
+  description = "The AWS profile aligned with the AWS environment to deploy to"
+  type        = string
 }
 
 variable "kms_key_id" {
@@ -11,11 +21,6 @@ variable "kms_key_id" {
 variable "path" {
   type        = string
   description = "Path to organize secrets"
-}
-
-variable "partition" {
-  type        = string
-  description = "The AWS partition to use"
 }
 
 variable "empty_value" {
@@ -37,9 +42,9 @@ variable "regional_tags" {
 }
 
 variable "global_tags" {
-  description = "a map of strings that contains global level tags"
-  type        = map(string)
+  type        = map(any)
   default     = {}
+  description = "Additional tags (e.g. map(`BusinessUnit`,`XYZ`)."
 }
 
 variable "recovery_window_in_days" {

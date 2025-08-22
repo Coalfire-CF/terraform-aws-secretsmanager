@@ -15,7 +15,7 @@ resource "aws_secretsmanager_secret" "this" {
       kms_key_id = replica.value.kms_key_arn # ARN is preferred to avoid perpetual diff
     }
   }
-}
+} 
 
 resource "aws_secretsmanager_secret_policy" "shared" {
   for_each = var.shared ? { for s in var.secrets : s.secret_name => s } : {}
@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "resource_policy_MA" {
       ]
       resources = values(aws_secretsmanager_secret.this)[*].arn
       principals {
-        type = "AWS"
+        type        = "AWS"
         identifiers = ["*"]
       }
       condition {
@@ -73,7 +73,7 @@ data "aws_iam_policy_document" "resource_policy_MA" {
 }
 
 resource "aws_secretsmanager_secret_version" "this" {
-  for_each      = var.empty_value ? {} : { for s in var.secrets : s.secret_name => s }
+  for_each = var.empty_value ? {} : { for s in var.secrets : s.secret_name => s }
 
   secret_id     = aws_secretsmanager_secret.this[each.key].id
   secret_string = data.aws_secretsmanager_random_password.random_passwords[each.key].random_password

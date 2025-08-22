@@ -1,11 +1,10 @@
 ![Coalfire](coalfire_logo.png)
 
-
-# AWS Secrets Manager Terraform Module
+# terraform-aws-secretsmanager
 
 ## Description
 
-This module creates secrets in AWS Secrets Manager. The varible `names` is a list that will be used to create secrets for however many values are passed into the list.
+This repository contains a Terraform module to create and manage secrets in AWS Secrets Manager. It supports the creation of secrets with random or static values and secure access through IAM policies. The variable `names` is a list that will be used to create secrets for however many values are passed into the list.
 
 ## Dependencies
 
@@ -13,124 +12,132 @@ No dependencies.
 
 ## Resource List
 
-- Secrets Manager Secret
+- Secrets Manager Secret (e.g. username and/or password)
 - Secret Policy
 - Secret Version
 
-## Deployment Steps
-
-This module can be called as outlined below.
-
-- Change directories to the directory that requires secrets and source the module as shown below.
-- From the directory run `terraform init`.
-- Run `terraform plan` to review the resources being created.
-- If everything looks correct in the plan output, run `terraform apply`.
-
 ## Usage
 
-The below examples are how you can call secrets manager module to create secrets as needed. 
+The below examples demonstrate how you can call the AWS Secrets Manager module to create secrets as needed. 
 
-### Shared Secrets
-Set "shared = true" and provide the AWS Organization IDs that you want to share the secrets with:
+
 ```hcl
 data "aws_organizations_organization" "current" {
-  provider = aws.current
+  provider = aws.mgmt
 }
 
-module "gitlab_ad_credentials" {
-  source = "github.com/Coalfire-CF/terraform-aws-secretsmanager?ref=v2.1.0"
+module "credentials" {
+  source = "github.com/Coalfire-CF/terraform-aws-secretsmanager?ref=v2.0.5"
   providers = {
-    aws = aws.current
+    aws = aws.mgmt
   }
 
-  kms_key_id = data.terraform_remote_state.account-setup.outputs.sm_kms_key_arn
+  kms_key_id = data.terraform_remote_state.account-setup.outputs.sm_kms_key_arn 
+
   secrets = [
     {
-      secret_name        = "svc_gitlab"
-      secret_description = "Unprivileged AD user with read-only access intended to read LDAP."
+      secret_name        = "svc_paktesting"
+      secret_description = "Creating test credentials for Pak Parties."
     }
   ]
-  path                    = "${var.ad_secrets_path}credentials/"
-  partition               = data.aws_partition.current.partition
+
+  path                    = "${var.path}credentials/"
+  partition               = local.partition
   recovery_window_in_days = var.recovery_window_in_days
+  tags                    = local.global_tags
 
   # Random Password
   password_length = 20
 
   # Sharing
-  shared           = true
-  organization_ids = [data.aws_organizations_organization.current.id]
+  shared = false #update to true and select utilize one of the options below
+  #organization_ids  = [data.aws_organizations_organization.current.id] # Share with Organizations
+  #cross_account_ids = [local.root_account_id]                          # Share across AWS Accounts, update local. to appropriate account ID
 }
 ```
 
-OR
+## Environment Setup
 
-If secrets need to be shared between AWS accounts, set "shared = true" and also provide "cross_account_ids".
+Establish a secure connection to the Management AWS account used for the build:
+
 ```hcl
-module "gitlab_ad_credentials" {
-  source = "github.com/Coalfire-CF/terraform-aws-secretsmanager?ref=v2.1.0"
-  providers = {
-    aws = aws.current
-  }
+IAM user authentication:
 
-  kms_key_id = data.terraform_remote_state.account-setup.outputs.sm_kms_key_arn
-  secrets = [
-    {
-      secret_name        = "svc_gitlab"
-      secret_description = "Unprivileged AD user with read-only access intended to read LDAP."
-    }
-  ]
-  path                    = "${var.ad_secrets_path}credentials/"
-  partition               = data.aws_partition.current.partition
-  recovery_window_in_days = var.recovery_window_in_days
+- Download and install the AWS CLI (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- Log into the AWS Console and create AWS CLI Credentials (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
+- Configure the named profile used for the project, such as 'aws configure --profile example-mgmt'
 
-  # Random Password
-  password_length = 20
+SSO-based authentication (via IAM Identity Center SSO):
 
-  # Sharing
-  shared            = true
-  cross_account_ids = ["XXXXXXXXXXXX"]
-}
+- Login to the AWS IAM Identity Center console, select the permission set for MGMT, and select the 'Access Keys' link.
+- Choose the 'IAM Identity Center credentials' method to get the SSO Start URL and SSO Region values.
+- Run the setup command 'aws configure sso --profile example-mgmt' and follow the prompts.
+- Verify you can run AWS commands successfully, for example 'aws s3 ls --profile example-mgmt'.
+- Run 'export AWS_PROFILE=example-mgmt' in your terminal to use the specific profile and avoid having to use '--profile' option.
 ```
 
-### Cross-region Replication
-This is more of an edge use-case.
-Provide a list of maps to "replicas" which includes the AWS Region you want to replicate the secret to, as well as a KMS Key ARN for the key you want to use to encrypt the secret.
-```hcl
-module "gitlab_ad_credentials" {
-  source = "github.com/Coalfire-CF/terraform-aws-secretsmanager?ref=v2.1.0"
-  providers = {
-    aws = aws.current
-  }
+## Deployment Steps
 
-  kms_key_id = data.terraform_remote_state.account-setup.outputs.sm_kms_key_arn
-  secrets = [
-    {
-      secret_name        = "svc_gitlab"
-      secret_description = "Unprivileged AD user with read-only access intended to read LDAP."
-    }
-  ]
-  path                    = "${var.ad_secrets_path}credentials/"
-  partition               = data.aws_partition.current.partition
-  recovery_window_in_days = var.recovery_window_in_days
+1. Navigate to the Terraform project and create a parent directory in the upper level code, for example:
 
-  # Random Password
-  password_length = 20
+    ```hcl
+    ../aws/terraform/{REGION}/management-account/example
+    ```
 
-  # Sharing
-  shared           = true
-  organization_ids = [data.aws_organizations_organization.current.id]
+   If multi-account management plane:
 
-  # Replication
-  replicas = [
-    {
-      region = "us-gov-east-1"
-      kms_key_arn = var.replica_region_sm_kms_key_arn
-    }
-  ]
-}
+    ```hcl
+    ../aws/terraform/{REGION}/{ACCOUNT_TYPE}-mgmt-account/example
+    ```
 
-```
+2. Create a new branch. The branch name should provide a high level overview of what you're working on.  
+
+3. Create a properly defined main.tf file via the template found under 'Usage' while adjusting tfvars as needed. Note that many provided variables are outputs from other modules. Example parent directory:
+
+   ```hcl
+   ├── Example/
+   │   ├── prefix.auto.tfvars   
+   │   ├── locals.tf
+   │   ├── main.tf
+   │   ├── outputs.tf
+   │   ├── providers.tf
+   │   ├── README.md
+   │   ├── remote-data.tf
+   │   ├── required-providers.tf
+   │   ├── variables.tf
+   │   ├── ...
+   ```
+
+4. Change directories to the `secretsmanager` directory.
+
+5. Ensure that the `prefix.auto.tfvars` variables are correct (especially the profile) or create a new tfvars file with the correct variables
+
+6. Customize code to meet requirements
+
+7. From the `secretsmanager` directory run, initialize the Terraform working directory:
+   ```hcl
+   terraform init
+   ```
+
+8. Standardized formatting in code:
+   ```hcl
+   terraform fmt
+   ```
+
+9. Optional: Ensure proper syntax and "spell check" your code:
+   ```hcl
+   terraform validate
+   ```
+   
+10. Create an execution plan and verify everything looks correct:
+      ```hcl
+      terraform plan
+      ```
+
+11. Apply the configuration:
+      ```hcl
+      terraform apply
+      ```
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -180,7 +187,7 @@ No modules.
 | <a name="input_path"></a> [path](#input\_path) | Path to organize secrets | `string` | n/a | yes |
 | <a name="input_recovery_window_in_days"></a> [recovery\_window\_in\_days](#input\_recovery\_window\_in\_days) | Number of days that AWS Secrets Manager waits before it can delete the secret. | `number` | `30` | no |
 | <a name="input_regional_tags"></a> [regional\_tags](#input\_regional\_tags) | a map of strings that contains regional level tags | `map(string)` | `{}` | no |
-| <a name="input_replicas"></a> [replicas](#input\_replicas) | List of regions to replicate the secret to. Each replica can optionally specify a KMS key | <pre>list(object({<br/>    region = string<br/>    kms_key_arn = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_replicas"></a> [replicas](#input\_replicas) | List of regions to replicate the secret to. Each replica can optionally specify a KMS key | <pre>list(object({<br/>    region      = string<br/>    kms_key_arn = optional(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_require_each_included_type"></a> [require\_each\_included\_type](#input\_require\_each\_included\_type) | Specifies whether to include at least one upper and lowercase letter, one number, and one punctuation | `bool` | `true` | no |
 | <a name="input_secrets"></a> [secrets](#input\_secrets) | Specifies the friendly name of the new secrets to be created as key and an optional value field for descriptions | `list(map(string))` | n/a | yes |
 | <a name="input_shared"></a> [shared](#input\_shared) | Whether secrets should be shared across accounts. | `bool` | `false` | no |
@@ -199,12 +206,16 @@ No modules.
 
 ## Contributing
 
-If you're interested in contributing to our projects, please review the [Contributing Guidelines](CONTRIBUTING.md). And send an email to [our team](contributing@coalfire.com) to receive a copy of our CLA and start the onboarding process.
+[Start Here](CONTRIBUTING.md)
 
 ## License
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/license/mit/)
 
+## Contact Us
+
+[Coalfire](https://coalfire.com/)
+
 ### Copyright
 
-Copyright © 2025 Coalfire Systems Inc.
+Copyright © 2023 Coalfire Systems Inc.
