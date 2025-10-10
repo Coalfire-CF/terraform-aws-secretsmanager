@@ -1,12 +1,18 @@
 name: Org Terraform Docs
 
+permissions:
+  contents: write
+  pull-requests: write
+
 on:
   pull_request:
+    paths:
+      - "**.tf"
+      - "**.tfvars"
+      - "**.hcl"
+      - ".terraform.lock.hcl"
+      - "**/terraform/**"
   workflow_call:
-
-permissions:
-  contents: write       # allow commits
-  pull-requests: write  # allow updating PRs if needed
 
 jobs:
   terraform-docs:
