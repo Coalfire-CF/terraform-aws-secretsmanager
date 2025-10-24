@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.2](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/compare/v2.1.1...v2.1.2) (2025-10-24)
+
+
+### Miscellaneous
+
+* **deps:** bump credentials::terraform-aws-secretsmanager from 2.1.0 to 2.1.1 in /example ([3490cbb](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/3490cbb1c58b41a5477ec71b078f655823d907a6))
+* **deps:** bump credentials::terraform-aws-secretsmanager in /example ([7312da0](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/7312da00bc7dc2e59890f85a6f092c1c0abbf706))
+
 ## [2.1.1](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/compare/v2.1.0...v2.1.1) (2025-10-10)
 
 
