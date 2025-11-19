@@ -145,13 +145,13 @@ SSO-based authentication (via IAM Identity Center SSO):
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.10.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.85.0, < 6.17.1 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.85.0, < 6.19.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.85.0, < 6.17.1 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.85.0, < 6.19.1 |
 
 ## Modules
 
@@ -225,7 +225,6 @@ Copyright © 2023 Coalfire Systems Inc.
 |-- CHANGELOG.md
 |-- CONTRIBUTING.md
 |-- LICENSE
-|-- License.md
 |-- README.md
 |-- coalfire_logo.png
 |-- example
@@ -241,6 +240,5 @@ Copyright © 2023 Coalfire Systems Inc.
 |-- outputs.tf
 |-- providers.tf
 |-- release-please-config.json
-|-- update-readme-tree.sh
 |-- variables.tf
 ```
