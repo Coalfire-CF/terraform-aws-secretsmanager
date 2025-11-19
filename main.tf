@@ -15,7 +15,7 @@ resource "aws_secretsmanager_secret" "this" {
       kms_key_id = replica.value.kms_key_arn # ARN is preferred to avoid perpetual diff
     }
   }
-} 
+}
 
 resource "aws_secretsmanager_secret_policy" "shared" {
   for_each = var.shared ? { for s in var.secrets : s.secret_name => s } : {}
