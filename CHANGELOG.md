@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.5](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/compare/v2.1.4...v2.1.5) (2025-12-03)
+
+
+### Miscellaneous
+
+* **deps:** update hashicorp/aws requirement from &gt;= 5.85.0, &lt; 6.19.1 to &gt;= 5.85.0, &lt; 6.21.1 ([2889890](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/288989075aeab887bcc3270e32d22202643b4e47))
+
 ## [2.1.4](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/compare/v2.1.3...v2.1.4) (2025-12-03)
 
 
