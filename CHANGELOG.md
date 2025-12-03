@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.1.4](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/compare/v2.1.3...v2.1.4) (2025-12-03)
+
+
+### Miscellaneous
+
+* **deps:** bump credentials::terraform-aws-secretsmanager from 2.1.2 to 2.1.3 in /example ([f1f6afa](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/f1f6afa24231c1c8b4f38b868c7eae361518f05c))
+* **deps:** bump credentials::terraform-aws-secretsmanager in /example ([58f21f0](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/58f21f0b5eff65d499a0b7342cf03fd2b660558f))
+* **deps:** update hashicorp/aws requirement from &gt;= 5.15.0, &lt; 6.20 to &gt;= 5.15.0, &lt; 6.22 ([1a1bea1](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/1a1bea16625a8d07bf3fef1d67df0ea85e471026))
+* **deps:** update hashicorp/aws requirement from &gt;= 5.15.0, &lt; 6.20 to &gt;= 5.15.0, &lt; 6.22 in /example ([18bfc41](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/18bfc4144f10cc07b19f67aec40d6b45bf93a83b))
+* **deps:** update hashicorp/aws requirement from &gt;= 5.85.0, &lt; 6.17.1 to &gt;= 5.85.0, &lt; 6.19.1 ([ea10f1b](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/ea10f1bf4a4121cc52ae780a86b8cce9e8364920))
+* **deps:** update hashicorp/aws requirement from &gt;= 5.85.0, &lt; 6.17.1 to &gt;= 5.85.0, &lt; 6.19.1 ([82acc3e](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/82acc3e0b3df6ff5d1ba9bc04826e376bfd6c964))
+* remove obsolete update-readme-tree.sh script ([246362a](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/246362a59cc79ba44b93175dcbc0b0d17e54d916))
+* remove obsolete update-readme-tree.sh script ([311bffd](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/311bffd9356c55bc9f59f606a7250f79ee60e85d))
+* remove old LICENSE file ([a1f64ab](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/a1f64abb64054e17a7f6be71f05195797202406d))
+* remove old LICENSE file ([dc94d39](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/dc94d3929278f6ef24d61bffa9dbb8423e673a65))
+* update README tree ([f5ed3ff](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/f5ed3fff0818fcb1b1ff6df0276e3a7453aa7a44))
+* update README tree ([a436de6](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/a436de6a0344f82e0bbfef28d289712325b8c9ad))
+
 ## [2.1.3](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/compare/v2.1.2...v2.1.3) (2025-11-03)
 
 
