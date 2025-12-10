@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.1.6](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/compare/v2.1.5...v2.1.6) (2025-12-10)
+
+
+### Miscellaneous
+
+* **deps:** bump credentials::terraform-aws-secretsmanager from 2.1.3 to 2.1.5 in /example ([8344f1b](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/8344f1bd6ff10a59203e003ed64e5b19c9ceb86d))
+* **deps:** bump credentials::terraform-aws-secretsmanager in /example ([1e9a919](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/1e9a919b4caee7d27fce371ee3ed54e4949bfd63))
+* **deps:** update hashicorp/aws requirement from &gt;= 5.85.0, &lt; 6.21.1 to &gt;= 5.85.0, &lt; 6.24.1 ([1398445](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/13984454f2d939d114674756156d1786de90e011))
+* **deps:** update hashicorp/aws requirement from &gt;= 5.85.0, &lt; 6.21.1 to &gt;= 5.85.0, &lt; 6.24.1 ([7add524](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/7add524b9d899da17a4f5de8bd2eca79967cfe5d))
+
 ## [2.1.5](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/compare/v2.1.4...v2.1.5) (2025-12-03)
 
 
