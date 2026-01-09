@@ -1,9 +1,9 @@
 locals {
   global_tags = {
-    Application = "Application Name"
-    Owner       = "Coalfire"
-    Team        = "Coalfire"
-    Environment = "prod"
+    Application = "Application Name" # Update as needed
+    Owner       = "Coalfire"         # Update as needed
+    Team        = "Coalfire"         # Update as needed
+    Environment = "prod"             # Update as needed
   }
 
   mgmt_plane_account_id = "" #Input Client Management Account ID
