@@ -23,6 +23,8 @@
 * **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-docs.yml from 0.1.0 to 0.1.1 ([711fffc](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/711fffcab9a2550ee330fc6e723f46255cb663f3))
 * **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-fmt.yml ([92f0c1e](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/92f0c1e3770aed47f52d90ef0dc406bc8bf4fe3d))
 * **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-fmt.yml from 0.1.0 to 0.1.1 ([a34a708](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/a34a70867b98fe65821a12a813b22d6546b9c986))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-validate.yml ([757d2d8](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/757d2d8a65fb276ca6a25349ffdf95af4756674e))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-validate.yml from 0.1.0 to 0.1.1 ([86cdb72](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/86cdb72c6086137dce1c2d2addcc9862cddd0898))
 * **deps:** bump Coalfire-CF/Actions/.github/workflows/org-tree-readme.yml ([dc219f0](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/dc219f0092afc8feba5bf6bf60feca03cfe9c2a8))
 * **deps:** bump Coalfire-CF/Actions/.github/workflows/org-tree-readme.yml from 0.1.0 to 0.1.1 ([1459450](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/1459450ecd5180551af2690b7c6ddc91168142db))
 * **deps:** bump credentials::terraform-aws-secretsmanager from 2.1.3 to 2.1.5 in /example ([8344f1b](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/8344f1bd6ff10a59203e003ed64e5b19c9ceb86d))
