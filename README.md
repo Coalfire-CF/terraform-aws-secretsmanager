@@ -103,7 +103,6 @@ SSO-based authentication (via IAM Identity Center SSO):
    │   ├── providers.tf
    │   ├── README.md
    │   ├── remote-data.tf
-   │   ├── required-providers.tf
    │   ├── variables.tf
    │   ├── ...
    ```
