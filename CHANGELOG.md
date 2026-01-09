@@ -1,5 +1,35 @@
 # Changelog
 
+## [2.1.6](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/compare/v2.1.5...v2.1.6) (2026-01-09)
+
+
+### Bug Fixes
+
+* license year ([d77c615](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/d77c615ca7587410d055197bbb0ea8273eb91b59))
+* update license year to 2026 ([3519050](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/3519050829510181f3050c3e2d7d2cb14d9e02dc))
+
+
+### Miscellaneous
+
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-checkov.yml ([7557964](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/7557964da24cc0309b59f3bead53bd5e17d8bc74))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-checkov.yml from 0.1.0 to 0.1.1 ([686206a](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/686206adf8769651242dbb6b39a61f379d6fc069))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-dependabot.yml ([36ec5ff](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/36ec5ff03b076e6a57285b850c4ef79aeca97c16))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-dependabot.yml from 0.1.0 to 0.1.1 ([42cd967](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/42cd967f348fbf3ccd39980b8c814099963e6b29))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-markdown-lint.yml ([9694ca2](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/9694ca2dfcd2482936a7f1c5a91f2ea1867ef378))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-markdown-lint.yml from 0.1.0 to 0.1.1 ([8fc12bd](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/8fc12bd25a5a1266623e8c96bc0ac916e61019b5))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml ([a013fcd](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/a013fcd4151ef9ee3ff31b9415134baf0305d76c))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-release.yml from 0.1.0 to 0.1.1 ([9c7a7de](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/9c7a7dede385f39af57697d01b358767fb3477eb))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-docs.yml ([5e963e7](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/5e963e73c10f0d6d4033da991f0862cd1a63b297))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-docs.yml from 0.1.0 to 0.1.1 ([711fffc](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/711fffcab9a2550ee330fc6e723f46255cb663f3))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-fmt.yml ([92f0c1e](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/92f0c1e3770aed47f52d90ef0dc406bc8bf4fe3d))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-terraform-fmt.yml from 0.1.0 to 0.1.1 ([a34a708](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/a34a70867b98fe65821a12a813b22d6546b9c986))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-tree-readme.yml ([dc219f0](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/dc219f0092afc8feba5bf6bf60feca03cfe9c2a8))
+* **deps:** bump Coalfire-CF/Actions/.github/workflows/org-tree-readme.yml from 0.1.0 to 0.1.1 ([1459450](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/1459450ecd5180551af2690b7c6ddc91168142db))
+* **deps:** bump credentials::terraform-aws-secretsmanager from 2.1.3 to 2.1.5 in /example ([8344f1b](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/8344f1bd6ff10a59203e003ed64e5b19c9ceb86d))
+* **deps:** bump credentials::terraform-aws-secretsmanager in /example ([1e9a919](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/1e9a919b4caee7d27fce371ee3ed54e4949bfd63))
+* **deps:** update hashicorp/aws requirement from &gt;= 5.85.0, &lt; 6.21.1 to &gt;= 5.85.0, &lt; 6.24.1 ([1398445](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/13984454f2d939d114674756156d1786de90e011))
+* **deps:** update hashicorp/aws requirement from &gt;= 5.85.0, &lt; 6.21.1 to &gt;= 5.85.0, &lt; 6.24.1 ([7add524](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/commit/7add524b9d899da17a4f5de8bd2eca79967cfe5d))
+
 ## [2.1.5](https://github.com/Coalfire-CF/terraform-aws-secretsmanager/compare/v2.1.4...v2.1.5) (2025-12-03)
 
 
