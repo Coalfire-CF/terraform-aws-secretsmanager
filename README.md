@@ -232,12 +232,11 @@ Copyright © 2023 Coalfire Systems Inc.
 |   |-- outputs.tf
 |   |-- providers.tf
 |   |-- remote-data.tf
-|   |-- required-providers.tf
 |   |-- sm.auto.tfvars
 |   |-- variables.tf
 |-- main.tf
 |-- outputs.tf
-|-- providers.tf
 |-- release-please-config.json
+|-- required_providers.tf
 |-- variables.tf
 ```
