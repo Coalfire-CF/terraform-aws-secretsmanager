@@ -103,7 +103,6 @@ SSO-based authentication (via IAM Identity Center SSO):
    │   ├── providers.tf
    │   ├── README.md
    │   ├── remote-data.tf
-   │   ├── required-providers.tf
    │   ├── variables.tf
    │   ├── ...
    ```
@@ -144,14 +143,14 @@ SSO-based authentication (via IAM Identity Center SSO):
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.10.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.85.0, < 6.24.1 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.10 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.85.0, < 6.24.1 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 6.0 |
 
 ## Modules
 
@@ -233,12 +232,11 @@ Copyright © 2023 Coalfire Systems Inc.
 |   |-- outputs.tf
 |   |-- providers.tf
 |   |-- remote-data.tf
-|   |-- required-providers.tf
 |   |-- sm.auto.tfvars
 |   |-- variables.tf
 |-- main.tf
 |-- outputs.tf
-|-- providers.tf
 |-- release-please-config.json
+|-- required_providers.tf
 |-- variables.tf
 ```
